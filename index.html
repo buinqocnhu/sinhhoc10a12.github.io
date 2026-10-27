@@ -3,174 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề Thi Sinh Học 10 - Đề Số 2</title>
+    <title>Hệ Thống Ôn Tập Sinh Học 10 - Tạo Đề Tự Động</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; background-color: #e9ecef; color: #000; margin: 0; padding: 20px; }
-        .container { max-width: 850px; margin: auto; background: white; padding: 40px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
-        h1 { text-align: center; font-size: 24px; margin-bottom: 5px; text-transform: uppercase; }
-        .sub-title { text-align: center; font-size: 16px; margin-bottom: 30px; font-style: italic; }
-        .section-title { font-weight: bold; font-size: 18px; margin-top: 30px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px solid #000; padding-bottom: 5px; }
-        .question { margin-bottom: 20px; text-align: justify; line-height: 1.6; }
-        .question-text { font-weight: bold; margin-bottom: 8px; }
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #1a5276; margin-bottom: 5px; font-size: 26px; }
+        .sub-title { text-align: center; color: #555; font-style: italic; margin-bottom: 20px; }
         
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-left: 15px; }
+        .toolbar { text-align: center; margin-bottom: 30px; padding: 15px; background: #e8f4fd; border-radius: 8px; border: 1px dashed #3498db; }
+        .btn-new { padding: 12px 25px; background: #f39c12; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-new:hover { background: #d68910; }
+        
+        .section-title { font-weight: bold; font-size: 18px; margin-top: 40px; margin-bottom: 15px; text-transform: uppercase; border-bottom: 2px solid #2980b9; padding-bottom: 5px; color: #2980b9; }
+        .question { margin-bottom: 25px; padding: 15px; background: #fdfdfd; border-left: 4px solid #bdc3c7; border-radius: 4px; text-align: justify; line-height: 1.6; }
+        .question-text { font-weight: bold; margin-bottom: 10px; font-size: 16px; }
+        
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-left: 10px; }
         .options.single-col { grid-template-columns: 1fr; }
-        .options label { cursor: pointer; display: flex; align-items: flex-start; margin-bottom: 5px;}
-        input[type="radio"] { margin-right: 8px; margin-top: 5px; transform: scale(1.2); }
+        .options label { cursor: pointer; display: flex; align-items: flex-start; padding: 8px; border-radius: 5px; border: 1px solid #eee; background: white; transition: 0.2s; }
+        .options label:hover { background: #e8f4fd; border-color: #b3d7f5; }
+        input[type="radio"] { margin-right: 10px; margin-top: 4px; transform: scale(1.2); }
         
         .tf-table { width: 100%; border-collapse: collapse; margin: 10px 0 15px 0; text-align: center; font-family: Arial, sans-serif; font-size: 14px; }
-        .tf-table th, .tf-table td { border: 1px solid #333; padding: 6px; }
-        .tf-statement { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 8px; background: #f9f9f9; border-radius: 4px; }
-        .tf-statement span { flex: 1; margin-right: 20px; }
-        .tf-options label { margin-left: 15px; cursor: pointer; }
+        .tf-table th, .tf-table td { border: 1px solid #333; padding: 8px; }
+        .tf-statement { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; background: #f9f9f9; border-radius: 4px; border: 1px solid #eee; }
+        .tf-statement span { flex: 1; margin-right: 20px; font-size: 15px; }
+        .tf-options label { margin-left: 20px; cursor: pointer; font-weight: bold; color: #555; }
         
-        .short-input { width: 100%; padding: 8px; border: 1px solid #999; border-radius: 4px; font-family: inherit; font-size: 16px; margin-top: 5px; box-sizing: border-box; }
-        .essay-input { width: 100%; height: 120px; padding: 10px; border: 1px solid #999; border-radius: 4px; font-family: inherit; font-size: 16px; margin-top: 5px; resize: vertical; box-sizing: border-box; }
+        .short-input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 16px; margin-top: 5px; box-sizing: border-box; }
+        .essay-input { width: 100%; height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 16px; margin-top: 5px; resize: vertical; box-sizing: border-box; }
         
-        .btn-submit { display: block; width: 100%; padding: 15px; background: #0056b3; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 40px; text-transform: uppercase; transition: background 0.3s; }
-        .btn-submit:hover { background: #004494; }
+        .btn-submit { display: block; width: 100%; padding: 18px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 20px; font-weight: bold; cursor: pointer; margin-top: 40px; transition: 0.3s; box-shadow: 0 4px 6px rgba(39, 174, 96, 0.3); }
+        .btn-submit:hover { background: #219150; }
         
-        .result { margin-top: 30px; padding: 20px; border-radius: 5px; display: none; text-align: center; font-size: 18px; font-weight: bold; }
-        .result.good { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .result.average { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-        .result.poor { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .result { margin-top: 30px; padding: 25px; border-radius: 8px; display: none; text-align: center; font-size: 20px; font-weight: bold; }
+        .result.good { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+        .result.average { background: #fff3cd; color: #856404; border: 2px solid #ffeeba; }
+        .result.poor { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
         
-        .answer-key { display: none; margin-top: 10px; padding: 10px; background: #e2e3e5; border-left: 4px solid #5a6268; font-size: 15px; font-family: Arial, sans-serif; }
-        .correct-box { border-left: 4px solid #28a745; background: #f0fff4; padding-left: 10px; }
-        .wrong-box { border-left: 4px solid #dc3545; background: #fff5f5; padding-left: 10px; }
+        .answer-key { display: none; margin-top: 15px; padding: 12px; background: #e9ecef; border-left: 4px solid #6c757d; font-size: 15px; font-family: Arial, sans-serif; color: #222; border-radius: 4px; }
+        .correct-box { border-left-color: #28a745; background: #f0fff4; }
+        .wrong-box { border-left-color: #dc3545; background: #fff5f5; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>BÀI KIỂM TRA MÔN SINH HỌC 10</h1>
-    <div class="sub-title">(Thời gian làm bài: 45 phút - Không kể thời gian phát đề)</div>
+    <h1>HỆ THỐNG TẠO ĐỀ THI TỰ ĐỘNG - SINH HỌC 10</h1>
+    <div class="sub-title">Đề thi được tạo ngẫu nhiên từ Ngân hàng câu hỏi chuẩn Ma trận</div>
+    
+    <div class="toolbar">
+        <button class="btn-new" onclick="window.location.reload()">🔄 TẠO ĐỀ MỚI NGẪU NHIÊN</button>
+        <p style="margin-top: 10px; font-size: 14px; color: #666;">(Mỗi lần bấm, hệ thống sẽ tự bốc câu hỏi khác từ kho dữ liệu)</p>
+    </div>
 
     <form id="examForm">
-        <div class="section-title">PHẦN I. CÂU HỎI NHIỀU LỰA CHỌN (10 câu)</div>
+        <div class="section-title">PHẦN I. TRẮC NGHIỆM NHIỀU LỰA CHỌN (10 câu)</div>
         <div id="part-mc"></div>
 
-        <div class="section-title">PHẦN II. CÂU HỎI ĐÚNG/SAI (1 câu)</div>
+        <div class="section-title">PHẦN II. CÂU HỎI ĐÚNG/SAI (1 câu - 4 ý)</div>
         <div id="part-tf"></div>
 
-        <div class="section-title">PHẦN III. CÂU HỎI TRẢ LỜI NGẮN (6 câu)</div>
+        <div class="section-title">PHẦN III. TRẢ LỜI NGẮN (6 câu)</div>
         <div id="part-sa"></div>
 
-        <div class="section-title">PHẦN IV. CÂU HỎI TỰ LUẬN (3 câu)</div>
+        <div class="section-title">PHẦN IV. TỰ LUẬN (3 câu)</div>
         <div id="part-tl"></div>
 
-        <button type="button" class="btn-submit" onclick="submitExam()">Nộp Bài & Xem Kết Quả</button>
+        <button type="button" class="btn-submit" onclick="submitExam()">NỘP BÀI & XEM KẾT QUẢ</button>
     </form>
 
     <div id="resultBox" class="result"></div>
 </div>
 
 <script>
-    // --- NGÂN HÀNG CÂU HỎI MỚI (ĐÃ XÁO TRỘN) ---
+    // ==========================================
+    // KHO DỮ LIỆU CÂU HỎI (QUESTION BANK)
+    // ==========================================
     
-    // 1. Trắc nghiệm (10 câu)
-    const mcQuestions = [
-        // Bài 1 (Câu 4, 5, 6 trang 1)
-        { id: "mc1", q: "Mục tiêu nào không đúng khi nói về mục tiêu của Sinh học?", options: ["A. Tìm hiểu sự hình thành và phát triển của thế giới sống.", "B. Giúp chúng ta có thái độ đúng đắn đối với thiên nhiên; biết yêu quý và tự hào về thiên nhiên, quê hương, đất nước.", "C. Giúp chúng ta tìm ra phương pháp khai thác tài nguyên triệt để góp phần phát triển kinh tế.", "D. Phục vụ cho sự phát triển của xã hội loài người một cách bền vững."], ans: "C" },
-        { id: "mc2", q: "Những hành động nào sau đây thể hiện tình yêu thiên nhiên, quê hương, đất nước? (1) Bảo vệ môi trường sống, vứt rác đúng nơi quy định. (2) Tích cực tham gia các hoạt động vì lợi ích cộng đồng như: trồng cây xanh, nhặt rác nơi công cộng... (3) Ra sức học tập, nâng cao trình độ bản thân, tham gia nghiên cứu khoa học để ra các giải pháp, các sản phẩm có ích cho môi trường và xã hội. (4) Tuyên truyền cho bạn bè, người thân trong gia đình cùng bảo vệ môi trường với các việc làm thiết thực hằng ngày như: Phân loại rác sinh hoạt, xử lí rác hữu cơ sinh hoạt làm phân bón, thực hiện tiết kiệm điện “Tắt khi không sử dụng”, tiết kiệm nước ....", options: ["A. 1, 2, 4.", "B. 2, 3, 4.", "C. 1, 2, 3.", "D. 1, 2, 3, 4."], ans: "D" },
-        { id: "mc3", q: "Khi nói về các ngành nghề liên quan đến sinh học, nhận định sau đây là sai?", options: ["A. Xét nghiệm DNA hoặc dấu vân tay để xác định mối quan hệ huyết thống là ứng dụng của ngành Pháp y.", "B. Không thể xét nghiệm DNA từ các mẫu máu, tóc, da, móng tay… của tội phạm để lại hiện trường gây trọng án hình sự để xác định danh tính của hung thủ gây án.", "C. Ngành Y - dược học có vai trò chăm sóc và bảo vệ sức khỏe, chữa trị bệnh tật cho con người.", "D. Trong tương lai, con người có khả năng chữa khỏi các bệnh hiểm nghèo như ung thư, AIDS … bằng các phương pháp mới như liệu pháp gene, trị liệu bằng tế bào gốc, ứng dụng công nghệ enzyme…."], ans: "B" },
+    // --- TRẮC NGHIỆM (Kho chứa) ---
+    const poolMC = {
+        // Bài 1 (Cần bốc 3 câu)
+        b1: [
+            { id: "b1_mc1", q: "Đối tượng nghiên cứu của sinh học là", options: ["A. sự biến đổi của các chất trong đời sống tự nhiên.", "B. vật chất, năng lượng và sự vận động của chúng trong đời sống.", "C. các sinh vật, các cấp độ tổ chức của thế giới sống.", "D. các sự vật, hiện tượng của thế giới tự nhiên."], ans: "C" },
+            { id: "b1_mc2", q: "Lĩnh vực nghiên cứu cơ bản của sinh học là", options: ["A. Khám phá thế giới sống; tìm cách đưa những phát kiến mới về sinh học ứng dụng vào thực tiễn đời sống.", "B. Tìm hiểu cấu trúc của các cấp độ tổ chức sống; phân loại, cách thức vận hành và tiến hoá của thế giới sống.", "C. Tìm hiểu cấu trúc của các cấp độ tổ chức sống; tìm cách đưa những phát kiến mới về sinh học ứng dụng vào thực tiễn đời sống.", "D. Khám phá thế giới sống; phân loại, cách thức vận hành và tiến hoá của thế giới sống."], ans: "B" },
+            { id: "b1_mc3", q: "Trong các nội dung sau đây, đâu là các lĩnh vực nghiên cứu ứng dụng của sinh học?", options: ["A. Tìm hiểu cấu trúc của các cấp độ tổ chức sống; tìm cách đưa những phát kiến mới về sinh học ứng dụng vào thực tiễn đời sống.", "B. Khám phá thế giới sống; phân loại, cách thức vận hành và tiến hoá của thế giới sống.", "C. Tìm hiểu cấu trúc của các cấp độ tổ chức sống; phân loại, cách thức vận hành và tiến hoá của thế giới sống.", "D. Khám phá thế giới sống; tìm cách đưa những phát kiến mới về sinh học ứng dụng vào thực tiễn đời sống."], ans: "D" },
+            { id: "b1_mc4", q: "Mục tiêu nào không đúng khi nói về mục tiêu của Sinh học?", options: ["A. Tìm hiểu sự hình thành và phát triển của thế giới sống.", "B. Giúp chúng ta có thái độ đúng đắn đối với thiên nhiên; biết yêu quý và tự hào về thiên nhiên, quê hương, đất nước.", "C. Giúp chúng ta tìm ra phương pháp khai thác tài nguyên triệt để góp phần phát triển kinh tế.", "D. Phục vụ cho sự phát triển của xã hội loài người một cách bền vững."], ans: "C" }
+        ],
+        // Bài 3 (Cần bốc 2 câu)
+        b3: [
+            { id: "b3_mc1", q: "Cấp độ tổ chức sống là cấp độ tổ chức của vật chất", options: ["A. có biểu hiện một vài đặc tính của sự sống.", "B. có biểu hiện đầy đủ đặc tính của sự sống.", "C. được cấu tạo từ các nguyên tố hoá học.", "D. có chung nhiều đặc điểm nhất định."], ans: "B" },
+            { id: "b3_mc2", q: "Vật sống khác với vật không sống vì nó có đặc điểm đặc trưng nào dưới đây?", options: ["A. Có khả năng di chuyển.", "B. Có khả năng đáp ứng với tín hiệu.", "C. Được cấu tạo từ tế bào.", "D. Có cấu tạo phức tạp."], ans: "C" },
+            { id: "b3_mc3", q: "Thông qua quá trình thoát hơi nước mà thực vật hấp thụ khí CO2 cung cấp cho quá trình quang hợp. Hiện tượng này đang đề cập đến đặc điểm nào của các cấp độ tổ chức sống?", options: ["A. Sinh trưởng và phát triển.", "B. Tổ chức theo nguyên tắc thứ bậc.", "C. Hệ thống mở và tự điều chỉnh.", "D. Liên tục tiến hóa."], ans: "C" }
+        ],
+        // Bài 4 (Cần bốc 2 câu)
+        b4: [
+            { id: "b4_mc1", q: "Nội dung nào sau đây đúng với học thuyết tế bào?", options: ["A. Hầu hết mọi sinh vật đều không được cấu tạo từ tế bào.", "B. Tế bào chỉ được sinh ra từ sự phân chia các tế bào có trước.", "C. Sự sống được tiếp diễn do có sự chuyển hoá và sự di truyền xảy ra bên ngoài tế bào.", "D. Tế bào là đơn vị lớn nhất, đơn vị cấu trúc cấu tạo nên mọi cơ thể sinh vật."], ans: "B" },
+            { id: "b4_mc2", q: "Cấp độ tổ chức cơ bản nhất của cơ thể là .........(1).......... Từ/Cụm từ (1) là", options: ["A. Tế bào.", "B. Cơ quan.", "C. Cơ thể.", "D. Hệ cơ quan."], ans: "A" },
+            { id: "b4_mc3", q: "Trong khoảng hơn 92 nguyên tố hóa học có trong tự nhiên, có khoảng bao nhiêu nguyên tố tham gia cấu tạo nên sự sống?", options: ["A. Khoảng 92 nguyên tố.", "B. Khoảng 90 nguyên tố.", "C. Khoảng 25 nguyên tố.", "D. Khoảng 52 nguyên tố."], ans: "C" }
+        ],
+        // Bài 5 (Cần bốc 3 câu)
+        b5: [
+            { id: "b5_mc1", q: "Đơn phân nào sau đây cấu tạo nên carbohydrate?", options: ["A. Đường đơn.", "B. Amino acid.", "C. Nucleotide.", "D. Acid béo."], ans: "A" },
+            { id: "b5_mc2", q: "Nhóm phân tử đường nào sau đây là đường đơn?", options: ["A. Fructose, galactose, glucose.", "B. Glycogen, cellulose, chitin.", "C. Galactose, lactose, tinh bột.", "D. Glucose, saccharose, cellulose."], ans: "A" },
+            { id: "b5_mc3", q: "Khi nói về lipid, phát biểu nào sau đây là đúng?", options: ["A. Lipid là đại phân tử hữu cơ được cấu tạo theo nguyên tắc đa phân", "B. Steroid là loại lipid phức tạp, đây là thành phần chính cấu tạo màng sinh chất.", "C. Lipid là chất dự trữ và cung cấp năng lượng cho tế bào.", "D. Vitamin A, D, E, K là các vitamin tan trong nước."], ans: "C" },
+            { id: "b5_mc4", q: "Carbohydrate không có chức năng nào sau đây?", options: ["A. Là nguồn dự trữ năng lượng cho tế bào và cơ thể.", "B. Cung cấp năng lượng cho tế bào và cơ thể.", "C. Là vật liệu cấu trúc xây dựng tế bào và cơ thể.", "D. Điều hòa sinh trưởng cho tế bào và cơ thể."], ans: "D" }
+        ]
+    };
 
-        // Bài 3 (Câu 4, 5 trang 7, 8)
-        { id: "mc4", q: "Thông qua quá trình thoát hơi nước mà thực vật hấp thụ khí CO2 cung cấp cho quá trình quang hợp. Đồng thời hơi nước thoát ra làm giảm nhiệt độ trong cây và môi trường xung quanh; O2 được giải phóng từ quang hợp góp phần điều hòa khí quyển. Hiện tượng này đang đề cập đến đặc điểm nào của các cấp độ tổ chức sống?", options: ["A. Sinh trưởng và phát triển.", "B. Tổ chức theo nguyên tắc thứ bậc.", "C. Hệ thống mở và tự điều chỉnh.", "D. Liên tục tiến hóa."], ans: "C" },
-        { id: "mc5", q: "Khi hàm lượng glucose trong máu ở người tăng cao thì tuyến tụy tăng cường tổng hợp hormone insulin để chuyển hóa glucose thành glycogen tích lũy ở gan, cơ. Đây là ví dụ về", options: ["A. Tổ chức theo nguyên tắc thứ bậc.", "B. Khả năng tự điều chỉnh.", "C. Hệ thống mở.", "D. Liên tục tiến hóa."], ans: "B" },
-
-        // Bài 4 (Câu 12, 13 trang 11)
-        { id: "mc6", q: "Trong khoảng hơn 92 nguyên tố hóa học có trong tự nhiên, có khoảng bao nhiêu nguyên tố tham gia cấu tạo nên sự sống?", options: ["A. Khoảng 92 nguyên tố.", "B. Khoảng 90 nguyên tố.", "C. Khoảng 25 nguyên tố.", "D. Khoảng 52 nguyên tố."], ans: "C" },
-        { id: "mc7", q: "Trong số khoảng 25 nguyên tố hóa học tham gia cấu tạo nên sự sống, các nguyên tố chiếm phần lớn trong cơ thể sống (khoảng 96,3%) là", options: ["A. Fe, C, H.", "B. C, N, P, Cl.", "C. C, H, O, N.", "D. K, S, Mg, Cu."], ans: "C" },
-
-        // Bài 5 (Câu 5, 8, 9 trang 16)
-        { id: "mc8", q: "Carbohydrate không có chức năng nào sau đây?", options: ["A. Là nguồn dự trữ năng lượng cho tế bào và cơ thể.", "B. Cung cấp năng lượng cho tế bào và cơ thể.", "C. Là vật liệu cấu trúc xây dựng tế bào và cơ thể.", "D. Điều hòa sinh trưởng cho tế bào và cơ thể."], ans: "D" },
-        { id: "mc9", q: "Hợp chất carbohydrate nào sau đây là nguồn năng lượng dự trữ trong cây?", options: ["A. Lactose.", "B. Tinh bột.", "C. Glucose.", "D. Glycogen."], ans: "B" },
-        { id: "mc10", q: "Nhóm thực phẩm nào dưới đây là nguồn chính cung cấp chất đường bột cho cơ thể?", options: ["A. Dừa, mỡ lợn, dầu hạt cải.", "B. Bắp cải, cà rốt, cam.", "C. Tôm, thịt gà, trứng vịt.", "D. Gạo, ngô, khoai lang."], ans: "D" }
-    ];
-
-    // 2. Đúng/Sai (1 câu - Bài 5, Câu 52 trang 21)
-    const tfQuestions = [
+    // --- ĐÚNG/SAI (Chỉ có 1 câu trong ảnh) ---
+    const poolTF = [
         { 
             id: "tf1", 
-            q: "Phân tích vật chất di truyền của bốn chủng vi sinh vật gây bệnh thì thu được kết quả như bảng sau. Biết rằng bốn chủng trên đều có vật chất di truyền là một phân tử nucleic acid. Từ kết quả phân tích, mỗi nhận định sau đây đúng hay sai?", 
+            q: "Phân tích vật chất di truyền của bốn chủng vi sinh vật gây bệnh thì thu được kết quả như bảng sau. Biết rằng bốn chủng trên đều có vật chất di truyền là một phân tử nucleic acid. Nhận định sau đây đúng hay sai?", 
             table: `<table class="tf-table"><tr><th>Chủng gây bệnh</th><th colspan="5">Tỷ lệ các loại nucleotide (%)</th></tr><tr><th></th><th>A</th><th>T</th><th>U</th><th>G</th><th>C</th></tr><tr><td>1</td><td>15</td><td>15</td><td>0</td><td>35</td><td>35</td></tr><tr><td>2</td><td>30</td><td>20</td><td>0</td><td>30</td><td>20</td></tr><tr><td>3</td><td>24</td><td>0</td><td>24</td><td>21</td><td>31</td></tr><tr><td>4</td><td>27</td><td>0</td><td>27</td><td>23</td><td>23</td></tr></table>`, 
             statements: ["a) Chủng 1 có thể có vật chất di truyền là một phân tử DNA mạch kép.", "b) Chủng 2 có thể có vật chất di truyền là một phân tử DNA mạch đơn.", "c) Chủng 3 có thể có vật chất di truyền là một phân tử RNA mạch đơn.", "d) Chủng 4 có thể có vật chất di truyền là một phân tử RNA mạch kép."], 
             ans: ["Đúng", "Đúng", "Đúng", "Sai"] 
         }
     ];
 
-    // 3. Trả lời ngắn (6 câu)
-    const saQuestions = [
-        // Bài 1 (Câu 23 trang 6)
-        { id: "sa1", q: "Những hoạt động nào được thực hiện ở bước 1 trong nghiên cứu vấn đề thúc đẩy thanh long ra quả trái vụ? (1) Chọn phương pháp xử lí. (2) Chuẩn bị bóng đèn và dây dẫn đúng kỹ thuật. (3) Ghi ngày bắt đầu và kết thúc thắp đèn, thời gian thắp đèn mỗi đêm. (4) Lựa chọn vườn thanh long để thực nghiệm. Hãy liệt kê các số đúng.", type: "text", ans: "(1), (2), (3), (4)." },
-        // Bài 3 (Câu 18 trang 9)
-        { id: "sa2", q: "Phương án nào dưới đây phản ánh đúng trình tự các cấp độ tổ chức của thế giới sống? (Chỉ ghi A, B, C hoặc D)", type: "radio", options: ["A. Nguyên tử → Phân tử → Tế bào → Bào quan → Mô → Hệ cơ quan → Cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "B. Nguyên tử → Phân tử → Bào quan → Tế bào → Mô → Cơ quan → Hệ cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "C. Phân tử → Nguyên tử → Tế bào → Bào quan → Mô → Cơ quan → Hệ cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "D. Phân tử → Nguyên tử → Bào quan → Tế bào → Mô → Hệ cơ quan → Cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái."], ans: "B" },
-        // Bài 3 (Câu 22 trang 9)
-        { id: "sa3", q: "Cho các cấp độ tổ chức của thế giới sống: (1) phân tử, (2) bào quan, (3) mô, (4) cơ quan và (5) hệ cơ quan. Hãy viết liền các số theo thứ tự tăng dần tương ứng với những cấp độ tổ chức sống được cấu tạo từ tế bào.", type: "text", ans: "2, 1, 3, 4, 5" },
-        // Bài 4 (Câu 20 trang 11)
-        { id: "sa4", q: "Nhận định nào sau đây là đúng khi nói về tác dụng của việc thường xuyên thay đổi các món ăn và mỗi bữa nên ăn nhiều món? (Chỉ ghi A, B, C hoặc D)", type: "radio", options: ["A. Cung cấp đầy đủ các nguyên tố hoá học và các chất dinh dưỡng cần thiết cho cơ thể.", "B. Cung cấp nhiều loại protein cấu tạo tế bào của cơ thể.", "C. Tạo sự đa dạng về văn hoá ẩm thực và thay đổi khẩu vị của người ăn.", "D. Cung cấp đầy đủ các nguyên tố đa lượng để cấu tạo nên tế bào."], ans: "A" },
-        // Bài 5 (Câu 26 trang 12)
-        { id: "sa5", q: "Phân tử nước có tính phân cực là do đâu? (Chỉ ghi A, B, C hoặc D)", type: "radio", options: ["A. oxygen có khả năng hút electron mạnh hơn nên cặp electron dùng chung có xu hướng lệch về phía hydrogen.", "B. oxygen có khả năng hút electron mạnh hơn nên cặp electron dùng chung có xu hướng lệch về phía oxygen.", "C. hydrogen có khả năng hút electron mạnh hơn nên cặp electron dùng chung có xu hướng lệch về phía hydrogen.", "D. hydrogen có khả năng hút electron mạnh hơn nên cặp electron dùng chung có xu hướng lệch về phía oxygen."], ans: "B" },
-        // Bài 5 (Câu 56 trang 21)
-        { id: "sa6", q: "Nucleotide được cấu tạo gồm bao nhiêu thành phần?", type: "text", ans: "3 thành phần (đường 5 carbon, base nitơ, nhóm phosphate)." }
-    ];
+    // --- TRẢ LỜI NGẮN (Kho chứa) ---
+    const poolSA = {
+        // Bài 1 (Bốc 1)
+        b1: [
+            { id: "b1_sa1", q: "Khi nói về các ngành nghề liên quan đến sinh học, nhận định sau đây là sai? (Chọn A, B, C, D)", type: "radio", options: ["A. Xét nghiệm DNA hoặc dấu vân tay để xác định mối quan hệ huyết thống là ứng dụng của ngành Pháp y.", "B. Không thể xét nghiệm DNA từ các mẫu máu, tóc, da, móng tay… của tội phạm để lại hiện trường gây trọng án hình sự để xác định danh tính của hung thủ gây án.", "C. Ngành Y - dược học có vai trò chăm sóc và bảo vệ sức khỏe, chữa trị bệnh tật cho con người.", "D. Trong tương lai, con người có khả năng chữa khỏi các bệnh hiểm nghèo như ung thư, AIDS … bằng các phương pháp mới như liệu pháp gene, trị liệu bằng tế bào gốc, ứng dụng công nghệ enzyme…."], ans: "B" }
+        ],
+        // Bài 3 (Bốc 2)
+        b3: [
+            { id: "b3_sa1", q: "Những nhận định nào đúng về đặc điểm chung của các cấp độ tổ chức của thế giới sống? (1) Tổ chức theo nguyên tắc thứ bậc. (2) Có khả năng tự điều chỉnh. (3) Thường xuyên trao đổi chất với môi trường. (4) Luôn có môi trường sống giống nhau.", type: "text", ans: "(1), (2), (3)." },
+            { id: "b3_sa2", q: "Cho các cấp độ tổ chức của thế giới sống: (1) phân tử, (2) bào quan, (3) mô, (4) cơ quan và (5) hệ cơ quan. Hãy viết liền các số theo thứ tự tăng dần tương ứng với những cấp độ tổ chức sống được cấu tạo từ tế bào.", type: "text", ans: "2, 1, 3, 4, 5" },
+            { id: "b3_sa3", q: "Phương án nào dưới đây phản ánh đúng trình tự các cấp độ tổ chức của thế giới sống? (Chọn A, B, C, D)", type: "radio", options: ["A. Nguyên tử → Phân tử → Tế bào → Bào quan → Mô → Hệ cơ quan → Cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "B. Nguyên tử → Phân tử → Bào quan → Tế bào → Mô → Cơ quan → Hệ cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "C. Phân tử → Nguyên tử → Tế bào → Bào quan → Mô → Cơ quan → Hệ cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái.", "D. Phân tử → Nguyên tử → Bào quan → Tế bào → Mô → Hệ cơ quan → Cơ quan → Cơ thể → Quần thể → Quần xã → Hệ sinh thái."], ans: "B" }
+        ],
+        // Bài 4 (Bốc 1)
+        b4: [
+            { id: "b4_sa1", q: "Theo tỉ lệ các nguyên tố hóa học có trong cơ thể sống, nguyên tố nào sau đây là nguyên tố đa lượng? (Chọn A, B, C, D)", type: "radio", options: ["A. Cu", "B. Fe", "C. Zn", "D. N"], ans: "D" },
+            { id: "b4_sa2", q: "Nhận định nào sau đây là đúng khi nói về tác dụng của việc thường xuyên thay đổi các món ăn và mỗi bữa nên ăn nhiều món? (Chọn A, B, C, D)", type: "radio", options: ["A. Cung cấp đầy đủ các nguyên tố hoá học và các chất dinh dưỡng cần thiết cho cơ thể.", "B. Cung cấp nhiều loại protein cấu tạo tế bào của cơ thể.", "C. Tạo sự đa dạng về văn hoá ẩm thực và thay đổi khẩu vị của người ăn.", "D. Cung cấp đầy đủ các nguyên tố đa lượng để cấu tạo nên tế bào."], ans: "A" }
+        ],
+        // Bài 5 (Bốc 2)
+        b5: [
+            { id: "b5_sa1", q: "Carbohydrate được cấu tạo từ bao nhiêu nguyên tố hoá học?", type: "text", ans: "3 nguyên tố (C, H, O)." },
+            { id: "b5_sa2", q: "Tùy vào số lượng đơn phân, carbohydrate được chia thành bao nhiêu nhóm?", type: "text", ans: "3 nhóm (Đường đơn, đường đôi, đường đa)." },
+            { id: "b5_sa3", q: "Nucleotide được cấu tạo gồm bao nhiêu thành phần?", type: "text", ans: "3 thành phần (đường 5 carbon, base nitơ, nhóm phosphate)." }
+        ]
+    };
 
-    // 4. Tự luận (3 câu)
-    const tlQuestions = [
-        // Bài 2 (Câu 25 trang 7)
-        { id: "tl1", q: "Người ta làm thí nghiệm ở vườn cam 6 tuổi với 3 công thức. Các công thức được bố trí theo khối ngẫu nhiên, 3 lần nhắc, mỗi lần 5 cây, lượng phân bón/cây là: - Công thức 1: 500 g N + 350 g P2O5 + 600 g K2O. - Công thức 2: 500 g N + 350 g P2O5 + 500 g K2O. - Công thức 3: 500 g N + 350 g P2O5 + 400 g K2O. a. Thí nghiệm trên đã sử dụng các phương pháp nghiên cứu sinh học nào? b. Kết quả thí nghiệm cho thấy: không có sự sai khác nhiều về thời gian từ nở hoa đến kết thúc nở hoa ở các công thức thí nghiệm. Từ kết quả thí nghiệm đó, hãy rút ra nhận xét.", ans: "a. Các phương pháp được sử dụng: Phương pháp thực nghiệm khoa học. Phương pháp quan sát. b. Các công thức bón phân áp dụng trong thí nghiệm có lượng K2O thay đổi nhưng không làm thay đổi thời gian nở hoa của giống cam. Do đó, tác động của K2O trong thí nghiệm đối với sự nở hoa là không đáng kể." },
-        // Bài 5 (Câu 63 trang 22)
-        { id: "tl2", q: "Trình bày vai trò của carbohydrate trong tế bào. Cho ví dụ mỗi vai trò.", ans: "Gồm: - Nguồn năng lượng cung cấp cho các hoạt động sống (glucose). - Nguồn năng lượng dự trữ của cơ thể (tinh bột ở TV; glycogen ở ĐV và nấm). - Tham gia cấu tạo một số thành phần của tế bào và cơ thể. VD: + Thành tế bào TV: cellulose. + Thành tế bào nấm & bộ xương ngoài của côn trùng: chitin. + Thành tế bào VK: peptidoglycan. - Một số carbohydrate liên kết với protein hay lipid tham gia cấu tạo màng sinh chất... - Đường 5C (ribose và deoxyribose) tham gia cấu tạo nucleic acid." },
-        // Bài 5 (Câu 68 trang 23)
-        { id: "tl3", q: "Vì sao tóc và lông trắng trứng gà đều có bản chất là protein nhưng lại có tính chất và vai trò khác nhau đối với con người?", ans: "- Vì chúng có số lượng, thành phần và trật tự sắp xếp các amino acid trong chuỗi polypeptide khác nhau. - Sự khác nhau trong chuỗi polypeptide dẫn tới các cấu trúc bậc 2, 3 và bậc 4 (nếu có) của chúng khác nhau. - Vì cấu trúc của tóc khác so với lòng trắng trứng gà nên quyết định các tính chất khác nhau: tóc bền, không tan trong nước và ít bị biến đổi khi gặp nhiệt độ cao, còn trứng gà không bền, tan trong nước và bị đông tụ khi gặp nhiệt độ cao. - Các tính chất của tóc phù hợp với vai trò bảo vệ cơ thể, các tính chất của trứng gà phù hợp với vai trò dự trữ chất dinh dưỡng và là một trong những nguồn dinh dưỡng của con người." }
-    ];
+    // --- TỰ LUẬN (Kho chứa) ---
+    const poolTL = {
+        // Bài 2 (Bốc 1)
+        b2: [
+            { id: "b2_tl1", q: "Trình bày các bước trong quy trình nghiên cứu khoa học?", ans: "Gồm các bước: (1) Quan sát và thu thập dữ liệu → (2) Đặt câu hỏi → (3) Hình thành giả thuyết → (4) Thiết kế và tiến hành thí nghiệm kiểm chứng → (5) Phân tích kết quả → (6) Rút ra kết luận." },
+            { id: "b2_tl2", q: "Người ta làm thí nghiệm ở vườn cam 6 tuổi với 3 công thức bón phân khác nhau về lượng K2O. a. Thí nghiệm trên đã sử dụng các phương pháp nghiên cứu sinh học nào? b. Kết quả cho thấy không có sự sai khác nhiều về thời gian nở hoa ở các công thức. Rút ra nhận xét.", ans: "a. Phương pháp thực nghiệm khoa học, Phương pháp quan sát. b. Lượng K2O thay đổi nhưng không làm thay đổi thời gian nở hoa của giống cam. Do đó, tác động của K2O đối với sự nở hoa là không đáng kể." }
+        ],
+        // Bài 5 (Bốc 2)
+        b5: [
+            { id: "b5_tl1", q: "Trình bày vai trò của carbohydrate trong tế bào. Cho ví dụ mỗi vai trò.", ans: "- Nguồn năng lượng (glucose). - Dự trữ năng lượng (tinh bột ở TV; glycogen ở ĐV). - Cấu tạo tế bào (cellulose ở TV, chitin ở nấm, peptidoglycan ở VK). - Liên kết với protein/lipid tạo màng sinh chất. - Đường 5C tham gia cấu tạo nucleic acid." },
+            { id: "b5_tl2", q: "Xác định các ví dụ sau đây thuộc vai trò nào của protein trong tế bào? a) Casein trong sữa mẹ. b) Actin và myosin cấu tạo nên các cơ. c) Kháng thể chống lại vi sinh vật gây bệnh. d) Hormone insulin và glucagon điều hòa lượng đường trong máu.", ans: "a) Dự trữ amino acid. b) Cấu trúc. c) Bảo vệ. d) Điều hòa hoạt động sinh lý." },
+            { id: "b5_tl3", q: "Vì sao tóc và lông trắng trứng gà đều có bản chất là protein nhưng lại có tính chất và vai trò khác nhau?", ans: "Do số lượng, thành phần và trật tự sắp xếp các amino acid khác nhau dẫn tới cấu trúc không gian khác nhau, quy định tính chất và chức năng khác nhau." }
+        ]
+    };
 
-    // --- HÀM HIỂN THỊ ĐỀ THI ---
-    function renderExam() {
+    // ==========================================
+    // HÀM TRỘN ĐỀ VÀ HIỂN THỊ
+    // ==========================================
+    function getRandom(arr, n) {
+        let result = new Array(n);
+        let len = arr.length;
+        let taken = new Array(len);
+        if (n > len) n = len;
+        while (n--) {
+            let x = Math.floor(Math.random() * len);
+            result[n] = arr[x in taken ? taken[x] : x];
+            taken[x] = --len in taken ? taken[len] : len;
+        }
+        return result;
+    }
+
+    // Biến lưu đề thi hiện tại
+    let currentExamMC = [];
+    let currentExamTF = [];
+    let currentExamSA = [];
+    let currentExamTL = [];
+
+    function generateExam() {
+        // Bốc câu hỏi theo đúng ma trận (Bài 1: 3, Bài 3: 2, Bài 4: 2, Bài 5: 3) => Tổng 10 câu
+        currentExamMC = [
+            ...getRandom(poolMC.b1, 3),
+            ...getRandom(poolMC.b3, 2),
+            ...getRandom(poolMC.b4, 2),
+            ...getRandom(poolMC.b5, 3)
+        ];
+        // Trộn lại vị trí các câu trắc nghiệm để không bị theo thứ tự bài
+        currentExamMC = currentExamMC.sort(() => Math.random() - 0.5);
+
+        // Bốc Đúng/Sai (Chỉ có 1 câu nên bốc thẳng)
+        currentExamTF = [...poolTF];
+
+        // Bốc Trả lời ngắn (Bài 1: 1, Bài 3: 2, Bài 4: 1, Bài 5: 2) => Tổng 6 câu
+        currentExamSA = [
+            ...getRandom(poolSA.b1, 1),
+            ...getRandom(poolSA.b3, 2),
+            ...getRandom(poolSA.b4, 1),
+            ...getRandom(poolSA.b5, 2)
+        ];
+        currentExamSA = currentExamSA.sort(() => Math.random() - 0.5);
+
+        // Bốc Tự luận (Bài 2: 1, Bài 5: 2) => Tổng 3 câu
+        currentExamTL = [
+            ...getRandom(poolTL.b2, 1),
+            ...getRandom(poolTL.b5, 2)
+        ];
+        currentExamTL = currentExamTL.sort(() => Math.random() - 0.5);
+
+        renderHTML();
+    }
+
+    function renderHTML() {
+        // Reset lại form
+        document.getElementById('examForm').reset();
+        document.getElementById('resultBox').style.display = 'none';
+        document.getElementById('part-mc').innerHTML = '';
+        document.getElementById('part-tf').innerHTML = '';
+        document.getElementById('part-sa').innerHTML = '';
+        document.getElementById('part-tl').innerHTML = '';
+
+        // Render Trắc nghiệm
         const mcContainer = document.getElementById('part-mc');
-        mcQuestions.forEach((q, i) => {
+        currentExamMC.forEach((q, i) => {
             let opts = q.options.map(o => `<label><input type="radio" name="${q.id}" value="${o.charAt(0)}"> ${o}</label>`).join('');
             mcContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${i + 1}. ${q.q}</div><div class="options">${opts}</div><div class="answer-key" id="ans-${q.id}"></div></div>`;
         });
 
+        // Render Đúng/Sai
         const tfContainer = document.getElementById('part-tf');
-        tfQuestions.forEach((q, i) => {
+        currentExamTF.forEach((q, i) => {
             let stmts = q.statements.map((s, idx) => `<div class="tf-statement"><span>${s}</span><div class="tf-options"><label><input type="radio" name="${q.id}_${idx}" value="Đúng"> Đúng</label><label><input type="radio" name="${q.id}_${idx}" value="Sai"> Sai</label></div></div>`).join('');
-            tfContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${mcQuestions.length + i + 1}. ${q.q}</div>${q.table}${stmts}<div class="answer-key" id="ans-${q.id}"></div></div>`;
+            tfContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${currentExamMC.length + i + 1}. ${q.q}</div>${q.table}${stmts}<div class="answer-key" id="ans-${q.id}"></div></div>`;
         });
 
+        // Render Trả lời ngắn
         const saContainer = document.getElementById('part-sa');
-        saQuestions.forEach((q, i) => {
+        currentExamSA.forEach((q, i) => {
             let inputHtml = q.type === "radio" ? `<div class="options single-col">${q.options.map(o => `<label><input type="radio" name="${q.id}" value="${o.charAt(0)}"> ${o}</label>`).join('')}</div>` : `<input type="text" class="short-input" name="${q.id}" placeholder="Nhập câu trả lời...">`;
-            saContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${mcQuestions.length + tfQuestions.length + i + 1}. ${q.q}</div>${inputHtml}<div class="answer-key" id="ans-${q.id}"></div></div>`;
+            saContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${currentExamMC.length + currentExamTF.length + i + 1}. ${q.q}</div>${inputHtml}<div class="answer-key" id="ans-${q.id}"></div></div>`;
         });
 
+        // Render Tự luận
         const tlContainer = document.getElementById('part-tl');
-        tlQuestions.forEach((q, i) => {
-            tlContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${mcQuestions.length + tfQuestions.length + saQuestions.length + i + 1}. ${q.q}</div><textarea class="essay-input" name="${q.id}" placeholder="Nhập bài làm của bạn..."></textarea><div class="answer-key" id="ans-${q.id}"></div></div>`;
+        currentExamTL.forEach((q, i) => {
+            tlContainer.innerHTML += `<div class="question" id="box-${q.id}"><div class="question-text">Câu ${currentExamMC.length + currentExamTF.length + currentExamSA.length + i + 1}. ${q.q}</div><textarea class="essay-input" name="${q.id}" placeholder="Nhập bài làm của bạn..."></textarea><div class="answer-key" id="ans-${q.id}"></div></div>`;
         });
     }
-    renderExam();
 
-    // --- HÀM NỘP BÀI VÀ CHẤM ĐIỂM ---
+    // ==========================================
+    // HÀM CHẤM ĐIỂM
+    // ==========================================
     function submitExam() {
         let correctCount = 0; let totalAuto = 0;
 
-        mcQuestions.forEach(q => {
+        // Chấm Trắc nghiệm
+        currentExamMC.forEach(q => {
             totalAuto++; const box = document.getElementById(`box-${q.id}`); const ansBox = document.getElementById(`ans-${q.id}`); const selected = document.querySelector(`input[name="${q.id}"]:checked`);
             if (selected && selected.value === q.ans) { correctCount++; box.classList.add('correct-box'); } else { box.classList.add('wrong-box'); }
             ansBox.innerHTML = `<strong>Đáp án đúng:</strong> ${q.ans}`; ansBox.style.display = "block";
         });
 
-        tfQuestions.forEach(q => {
+        // Chấm Đúng/Sai
+        currentExamTF.forEach(q => {
             totalAuto++; const box = document.getElementById(`box-${q.id}`); const ansBox = document.getElementById(`ans-${q.id}`); let correctSubCount = 0;
             q.ans.forEach((val, idx) => { const selected = document.querySelector(`input[name="${q.id}_${idx}"]:checked`); if (selected && selected.value === val) correctSubCount++; });
             if (correctSubCount === 4) { correctCount++; box.classList.add('correct-box'); } else { box.classList.add('wrong-box'); }
             ansBox.innerHTML = `<strong>Đáp án:</strong> a) ${q.ans[0]} | b) ${q.ans[1]} | c) ${q.ans[2]} | d) ${q.ans[3]}`; ansBox.style.display = "block";
         });
 
-        saQuestions.forEach(q => {
+        // Chấm Trả lời ngắn (Chỉ auto chấm dạng chọn đáp án)
+        currentExamSA.forEach(q => {
             const box = document.getElementById(`box-${q.id}`); const ansBox = document.getElementById(`ans-${q.id}`);
             if (q.type === "radio") {
                 totalAuto++; const selected = document.querySelector(`input[name="${q.id}"]:checked`);
@@ -180,16 +286,20 @@
             ansBox.style.display = "block";
         });
 
-        tlQuestions.forEach(q => { const ansBox = document.getElementById(`ans-${q.id}`); ansBox.innerHTML = `<strong>Gợi ý đáp án:</strong><br>${q.ans}`; ansBox.style.display = "block"; });
+        // Mở đáp án Tự luận
+        currentExamTL.forEach(q => { const ansBox = document.getElementById(`ans-${q.id}`); ansBox.innerHTML = `<strong>Gợi ý đáp án:</strong><br>${q.ans}`; ansBox.style.display = "block"; });
 
+        // Hiển thị kết quả
         const resultBox = document.getElementById('resultBox'); resultBox.style.display = 'block';
-        resultBox.innerHTML = `Bạn đã nộp bài thành công!<br>Số câu tự động chấm ĐÚNG: <b>${correctCount} / ${totalAuto}</b><br><i>(Vui lòng kéo xuống đối chiếu đáp án các phần).</i>`;
+        resultBox.innerHTML = `Bạn đã nộp bài thành công!<br>Số điểm tự động (Trắc nghiệm + Đúng/Sai + Trả lời ngắn có đáp án): <b>${correctCount} / ${totalAuto} câu</b><br><i>(Vui lòng kéo xuống đối chiếu đáp án).</i>`;
         
         if (correctCount >= totalAuto * 0.7) { resultBox.className = 'result good'; } else if (correctCount >= totalAuto * 0.4) { resultBox.className = 'result average'; } else { resultBox.className = 'result poor'; }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Khởi chạy lần đầu
+    generateExam();
+
 </script>
-</body>
-</html>
 </body>
 </html>
